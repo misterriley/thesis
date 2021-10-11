@@ -1,0 +1,9 @@
+BFI.doc
+/code signing/*
+/code/.settings/*
+/code/bin/**/*
+**/.classpath
+**/.fatjar
+**/.project
+**/*.jardesc
+**/weblaunchmanifest
