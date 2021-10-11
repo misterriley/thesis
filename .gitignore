@@ -7,3 +7,5 @@ BFI.doc
 **/.project
 **/*.jardesc
 **/weblaunchmanifest
+**/desktop.ini
+**/STATA saves/**/*
