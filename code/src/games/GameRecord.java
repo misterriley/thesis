@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package games;
 
@@ -8,8 +8,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 
 import client.GameType;
 import client.GameUseType;
@@ -17,20 +17,15 @@ import client.HTTPKeyManager;
 
 /**
  * @author Ringo
- * 
+ *
  */
 public class GameRecord
 {
-	private final List<NameValuePair>	m_data;
+	private final List<NameValuePair> m_data;
 
 	public GameRecord()
 	{
-		m_data = new ArrayList<NameValuePair>();
-	}
-
-	private void add(final String p_key, final String p_value)
-	{
-		m_data.add(new BasicNameValuePair(p_key, p_value));
+		m_data = new ArrayList<>();
 	}
 
 	public void addComments(final String p_comments)
@@ -41,25 +36,26 @@ public class GameRecord
 			final String value = URLEncoder.encode(p_comments, "UTF-8");
 			add(key, value);
 		}
-		catch(final UnsupportedEncodingException ex)
+		catch (final UnsupportedEncodingException ex)
 		{
 			ex.printStackTrace();
 		}
 	}
 
-	public void addResult(final int p_difficulty,
-		final boolean p_succeeded, final int p_index,
-		final GameType p_taskType, final boolean p_isPractice)
+	public void addResult(
+		final int p_difficulty,
+		final boolean p_succeeded,
+		final int p_index,
+		final GameType p_taskType,
+		final boolean p_isPractice)
 	{
-		final String resultKey = HTTPKeyManager.getTrialResultKey(p_taskType,
-			p_isPractice, p_index);
-		add(resultKey, Integer.toString(p_difficulty)
-			+ HTTPKeyManager.KEY_DELIMITER + Boolean.toString(p_succeeded));
+		final String resultKey = HTTPKeyManager.getTrialResultKey(p_taskType, p_isPractice, p_index);
+		add(resultKey, Integer.toString(p_difficulty) + HTTPKeyManager.KEY_DELIMITER + Boolean.toString(p_succeeded));
 	}
 
 	public void dumpToConsole()
 	{
-		for(final NameValuePair nvp: m_data)
+		for (final NameValuePair nvp : m_data)
 		{
 			System.out.println(nvp.getName() + "=" + nvp.getValue());
 		}
@@ -73,8 +69,7 @@ public class GameRecord
 		return m_data;
 	}
 
-	public void setAfterTaskDiffSelection(final int p_afterTaskDiffSelection,
-		final GameType p_type)
+	public void setAfterTaskDiffSelection(final int p_afterTaskDiffSelection, final GameType p_type)
 	{
 		final String key = HTTPKeyManager.getEndTaskDiffKey(p_type);
 		add(key, Integer.toString(p_afterTaskDiffSelection));
@@ -100,8 +95,7 @@ public class GameRecord
 		add(HTTPKeyManager.INCOME_KEY, Integer.toString(incomeIndicator));
 	}
 
-	public void setMidTaskDiffSelection(final int p_midTaskDiffSelection,
-		final GameType p_type)
+	public void setMidTaskDiffSelection(final int p_midTaskDiffSelection, final GameType p_type)
 	{
 		final String key = HTTPKeyManager.getMidTaskDiffKey(p_type);
 		add(key, Integer.toString(p_midTaskDiffSelection));
@@ -109,8 +103,7 @@ public class GameRecord
 
 	public void setNeuroticismAvg(final double p_neuroticismAvg)
 	{
-		add(HTTPKeyManager.NEUROTICISM_SCALE_KEY,
-			Double.toString(p_neuroticismAvg));
+		add(HTTPKeyManager.NEUROTICISM_SCALE_KEY, Double.toString(p_neuroticismAvg));
 	}
 
 	public void setOtherRaceText(final String otherRaceText)
@@ -121,5 +114,10 @@ public class GameRecord
 	public void setRaceIndicators(final int p_raceIndicators)
 	{
 		add(HTTPKeyManager.RACE_KEY, Integer.toString(p_raceIndicators));
+	}
+
+	private void add(final String p_key, final String p_value)
+	{
+		m_data.add(new BasicNameValuePair(p_key, p_value));
 	}
 }
