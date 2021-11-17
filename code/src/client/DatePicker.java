@@ -23,8 +23,8 @@ public class DatePicker
 	private final GameModel	m_model;
 	private final String	m_prompt;
 	private final JComboBox	m_monthBox;
-	private final JComboBox	m_dayBox;
-	private final JComboBox	m_yearBox;
+	private final JComboBox<String>	m_dayBox;
+	private final JComboBox<String>	m_yearBox;
 
 	public DatePicker(final GameModel p_model, final String p_prompt)
 	{
@@ -62,10 +62,10 @@ public class DatePicker
 		mainFrame.setVisible(true);
 	}
 
-	private JComboBox getIntComboBox(final int p_lowValue,
+	private JComboBox<String> getIntComboBox(final int p_lowValue,
 		final int p_highValue)
 	{
-		final JComboBox ret = new JComboBox();
+		final JComboBox<String> ret = new JComboBox<String>();
 		for(int i = p_lowValue; i <= p_highValue; i++)
 		{
 			ret.addItem(Integer.toString(i));
